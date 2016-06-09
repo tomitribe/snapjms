@@ -1,0 +1,41 @@
+package org.tomitribe.oss.snapjms;
+
+import java.util.Set;
+
+import javax.annotation.Resource;
+import javax.enterprise.event.Observes;
+import javax.enterprise.inject.spi.AnnotatedField;
+import javax.enterprise.inject.spi.AnnotatedType;
+import javax.enterprise.inject.spi.Extension;
+import javax.enterprise.inject.spi.ProcessAnnotatedType;
+import javax.inject.Inject;
+
+import org.apache.deltaspike.core.util.metadata.AnnotationInstanceProvider;
+import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
+
+public class CDIExtension implements Extension {
+   <T> void processAnnotatedType(@Observes ProcessAnnotatedType<T> pat) {
+      Set<AnnotatedField<? super T>> fields = pat.getAnnotatedType().getFields();
+      for (AnnotatedField<? super T> field : fields) {
+         if (shouldInjectionAnnotationBeAddedToField(field)) {
+            AnnotatedType<T> at = pat.getAnnotatedType();
+            AnnotatedTypeBuilder<T> builder = new AnnotatedTypeBuilder<T>().readFromType(at);
+            addInjectAnnotationToFields(at, builder);
+            pat.setAnnotatedType(builder.create());
+         }
+      }
+   }
+
+   private <X> boolean shouldInjectionAnnotationBeAddedToField(AnnotatedField<? super X> field) {
+      return !field.isAnnotationPresent(Inject.class) && field.isAnnotationPresent(Resource.class);
+   }
+
+   private <X> void addInjectAnnotationToFields(final AnnotatedType<X> annotatedType, AnnotatedTypeBuilder<X> builder) {
+      Inject injectAnnotation = AnnotationInstanceProvider.of(Inject.class);
+      for (AnnotatedField<? super X> field : annotatedType.getFields()) {
+         if (shouldInjectionAnnotationBeAddedToField(field)) {
+            builder.addToField(field, injectAnnotation);
+         }
+      }
+   }
+}
