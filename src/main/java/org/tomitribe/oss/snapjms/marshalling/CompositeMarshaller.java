@@ -16,6 +16,7 @@ public class CompositeMarshaller implements SnapMarshaller {
    @SnapJMS
    private Instance<SnapMarshaller> marshallers;
    @Inject
+   @SnapJMS
    private Logger log;
 
    @Override
@@ -28,8 +29,12 @@ public class CompositeMarshaller implements SnapMarshaller {
             break;
          }
       }
-      log.debug("marshall() returning messageText:{}", messageText);
-      return messageText;
+      if (messageText == null) {
+         throw new NoMarshallerCouldSerializePayloadException(payload);
+      } else {
+         log.debug("marshall() returning messageText:{}", messageText);
+         return messageText;
+      }
    }
 
    @Override
