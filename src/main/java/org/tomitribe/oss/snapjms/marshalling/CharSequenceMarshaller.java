@@ -7,10 +7,10 @@ import org.tomitribe.oss.snapjms.internal.SnapJMS;
 
 @SnapJMS
 @ApplicationScoped
-public class StringMarshaller implements SnapMarshaller {
+public class CharSequenceMarshaller implements SnapMarshaller {
    @Override
    public String marshall(Object payload) {
-      return (String) payload;
+      return payload.toString();
    }
 
    @Override
