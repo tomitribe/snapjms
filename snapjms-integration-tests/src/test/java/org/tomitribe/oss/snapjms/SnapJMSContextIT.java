@@ -14,12 +14,15 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.transaction.UserTransaction;
 
+import org.apache.openejb.junit.jee.EJBContainerRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.tomitribe.oss.snapjms.api.SnapJMSContext;
 
-@RunWith()
+@RunWith(EJBContainerRunner.class)
 public class SnapJMSContextIT {
+   private static final String TEST_DESTINATION = "org.tomitribe.oss.snapjms.SnapJMSContextIT";
+   private static final String TEST_PAYLOAD = "test_payload";
    @Resource(name = "jms/connectionFactory")
    private ConnectionFactory connectionFactory;
    @Resource
@@ -32,29 +35,33 @@ public class SnapJMSContextIT {
       Connection connection = connectionFactory.createConnection();
       connection.start();
       try {
-         utx.begin();
-         Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
-         Destination destination = session.createQueue("payload");
-         MessageProducer producer = session.createProducer(destination);
-         TextMessage message = (TextMessage) session.createTextMessage("payload");
-         producer.send(message);
+         try {
+            utx.begin();
+            Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
+            Destination destination = session.createQueue(TEST_DESTINATION);
+            MessageProducer producer = session.createProducer(destination);
+            TextMessage message = (TextMessage) session.createTextMessage(TEST_PAYLOAD);
+            producer.send(message);
+         } finally {
+            utx.commit();
+         }
+         TextMessage rxMessage;
+         try {
+            utx.begin();
+            Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
+            Destination destination = session.createQueue(TEST_DESTINATION);
+            MessageConsumer consumer = session.createConsumer(destination);
+            rxMessage = (TextMessage) consumer.receive(1000L);
+         } finally {
+            utx.commit();
+         }
+         if (rxMessage == null) {
+            fail("No message Recieved");
+         } else {
+            assertEquals(TEST_PAYLOAD, rxMessage.getText());
+         }
       } finally {
-         utx.commit();
-      }
-      TextMessage rxMessage;
-      try {
-         utx.begin();
-         Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
-         Destination destination = session.createQueue("payload");
-         MessageConsumer consumer = session.createConsumer(destination);
-         rxMessage = (TextMessage) consumer.receive(10L);
-      } finally {
-         utx.commit();
-      }
-      if (rxMessage == null) {
-         fail("No message Recieved");
-      } else {
-         assertEquals("payload", rxMessage.getText());
+         connection.close();
       }
    }
 
@@ -63,25 +70,29 @@ public class SnapJMSContextIT {
       Connection connection = connectionFactory.createConnection();
       connection.start();
       try {
-         utx.begin();
-         snapJMSContext.send("payload", "payload");
+         try {
+            utx.begin();
+            snapJMSContext.send(TEST_PAYLOAD, TEST_DESTINATION);
+         } finally {
+            utx.commit();
+         }
+         TextMessage rxMessage;
+         try {
+            utx.begin();
+            Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
+            Destination destination = session.createQueue(TEST_DESTINATION);
+            MessageConsumer consumer = session.createConsumer(destination);
+            rxMessage = (TextMessage) consumer.receive(10L);
+         } finally {
+            utx.commit();
+         }
+         if (rxMessage == null) {
+            fail("No message Recieved");
+         } else {
+            assertEquals(TEST_PAYLOAD, rxMessage.getText());
+         }
       } finally {
-         utx.commit();
-      }
-      TextMessage rxMessage;
-      try {
-         utx.begin();
-         Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
-         Destination destination = session.createQueue("payload");
-         MessageConsumer consumer = session.createConsumer(destination);
-         rxMessage = (TextMessage) consumer.receive(10L);
-      } finally {
-         utx.commit();
-      }
-      if (rxMessage == null) {
-         fail("No message Recieved");
-      } else {
-         assertEquals("payload", rxMessage.getText());
+         connection.close();
       }
    }
 }
