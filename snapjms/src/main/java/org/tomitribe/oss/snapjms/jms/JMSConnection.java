@@ -14,8 +14,8 @@ import javax.jms.JMSException;
 import javax.jms.Session;
 
 import org.slf4j.Logger;
-import org.tomitribe.oss.snapjms.api.SnapNonTransacted;
-import org.tomitribe.oss.snapjms.internal.SnapJMS;
+import org.tomitribe.oss.snapjms.api.SnapJMS;
+import org.tomitribe.oss.snapjms.api.SnapJMSNonTransacted;
 
 /**
  * Open a single JMS connection for the whole application
@@ -55,8 +55,7 @@ public class JMSConnection implements Serializable {
    }
 
    @Produces
-   @SnapJMS
-   @SnapNonTransacted
+   @SnapJMSNonTransacted
    public Session createJMSSession() {
       try {
          log.debug("createNewJMSSession()");

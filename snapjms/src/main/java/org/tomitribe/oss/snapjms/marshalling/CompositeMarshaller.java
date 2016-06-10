@@ -6,16 +6,16 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
-import org.tomitribe.oss.snapjms.api.SnapMarshaller;
-import org.tomitribe.oss.snapjms.internal.SnapJMS;
+import org.tomitribe.oss.snapjms.api.SnapJMS;
+import org.tomitribe.oss.snapjms.api.SnapJMSMarshaller;
 
 @Default
 @SnapJMS
 @ApplicationScoped
-public class CompositeMarshaller implements SnapMarshaller {
+public class CompositeMarshaller implements SnapJMSMarshaller {
    @Inject
    @SnapJMS
-   private Instance<SnapMarshaller> marshallers;
+   private Instance<SnapJMSMarshaller> marshallers;
    @Inject
    @SnapJMS
    private Logger log;
@@ -23,7 +23,7 @@ public class CompositeMarshaller implements SnapMarshaller {
    @Override
    public String marshall(Object payload) {
       String messageText = null;
-      for (SnapMarshaller marshaller : marshallers) {
+      for (SnapJMSMarshaller marshaller : marshallers) {
          if (!getClass().isAssignableFrom(marshaller.getClass()) && marshaller.isInterestedIn(payload.getClass())) {
             log.debug("marshall() selected marshaller:{}", marshaller.getClass().getName());
             messageText = marshaller.marshall(payload);

@@ -15,8 +15,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.slf4j.Logger;
 import org.tomitribe.oss.snapjms.CDIExtension;
-import org.tomitribe.oss.snapjms.api.SnapMarshaller;
-import org.tomitribe.oss.snapjms.internal.SnapJMS;
+import org.tomitribe.oss.snapjms.api.SnapJMS;
+import org.tomitribe.oss.snapjms.api.SnapJMSMarshaller;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses(CDIExtension.class)
@@ -28,7 +28,7 @@ public class CompositeMarshallerTest {
    @Produces
    @SnapJMS
    @Mock
-   private SnapMarshaller mockSnapMarshaller;
+   private SnapJMSMarshaller mockSnapMarshaller;
    @Inject
    @SnapJMS
    private CompositeMarshaller compositeMarshaller;

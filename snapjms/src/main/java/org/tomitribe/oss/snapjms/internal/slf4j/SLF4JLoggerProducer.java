@@ -6,7 +6,7 @@ import javax.enterprise.inject.spi.InjectionPoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tomitribe.oss.snapjms.internal.SnapJMS;
+import org.tomitribe.oss.snapjms.api.SnapJMS;
 
 /**
  * Produces loggers for CDI Injection

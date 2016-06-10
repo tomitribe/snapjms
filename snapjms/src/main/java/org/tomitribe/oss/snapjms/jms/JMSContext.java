@@ -4,13 +4,15 @@ import java.io.Serializable;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.jms.Session;
 import javax.transaction.TransactionSynchronizationRegistry;
 
 import org.slf4j.Logger;
-import org.tomitribe.oss.snapjms.internal.SnapJMS;
+import org.tomitribe.oss.snapjms.api.SnapJMS;
+import org.tomitribe.oss.snapjms.api.SnapJMSTransacted;
 
 /**
  * Open a single JMS Session for the current transaction
@@ -34,7 +36,8 @@ public class JMSContext implements Serializable {
    }
 
    @Produces
-   @SnapJMS
+   @Default
+   @SnapJMSTransacted
    public Session getSession() {
       try {
          Session session = (Session) transactionSynchronizationRegistry.getResource(key);

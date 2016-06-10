@@ -11,7 +11,7 @@ import org.jglue.cdiunit.CdiRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.tomitribe.oss.snapjms.CDIExtension;
-import org.tomitribe.oss.snapjms.internal.SnapJMS;
+import org.tomitribe.oss.snapjms.api.SnapJMS;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses(CDIExtension.class)

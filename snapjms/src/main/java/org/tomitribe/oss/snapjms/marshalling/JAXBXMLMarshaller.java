@@ -18,12 +18,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.tomitribe.oss.snapjms.api.SnapMarshaller;
-import org.tomitribe.oss.snapjms.internal.SnapJMS;
+import org.tomitribe.oss.snapjms.api.SnapJMS;
+import org.tomitribe.oss.snapjms.api.SnapJMSMarshaller;
 
 @SnapJMS
 @ApplicationScoped
-public class JAXBXMLMarshaller implements SnapMarshaller {
+public class JAXBXMLMarshaller implements SnapJMSMarshaller {
    @Inject
    @SnapJMS
    @JAXBContextProperties
