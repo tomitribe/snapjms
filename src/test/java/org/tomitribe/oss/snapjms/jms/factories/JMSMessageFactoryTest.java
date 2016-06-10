@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
+import javax.jms.Message;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
@@ -42,8 +43,21 @@ public class JMSMessageFactoryTest {
       assertEquals(textMessage, jmsMessageFactory.createMessage("payload", session));
    }
 
+   @Test(expected = UnsupportedPayloadException.class)
+   public void testCreateMessage_cantChoose() throws Exception {
+      jmsMessageFactory.createMessage(new Object(), session);
+   }
+
    @Test
    public void testCreateMessage2_text() throws Exception {
       assertEquals(textMessage, jmsMessageFactory.createMessage(TextMessage.class, session, "payload"));
+   }
+
+   @Test(expected = UnknownMessageTypeException.class)
+   public void testCreateMessage2_unknownMessageType() throws Exception {
+      jmsMessageFactory.createMessage(UnknownMessage.class, session, "payload");
+   }
+
+   private abstract class UnknownMessage implements Message {
    }
 }

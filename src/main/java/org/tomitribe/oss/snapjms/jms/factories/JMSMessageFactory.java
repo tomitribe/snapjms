@@ -19,6 +19,8 @@ public class JMSMessageFactory {
          Message message = null;
          if (payload instanceof CharSequence) {
             message = session.createTextMessage(payload.toString());
+         } else {
+            throw new UnsupportedPayloadException();
          }
          return message;
       } catch (JMSException e) {
@@ -30,7 +32,7 @@ public class JMSMessageFactory {
     * Create a specific type of message, and attempt to set payload
     */
    public <T extends Message> T createMessage(Class<T> messageType, Session session, Object payload) {
-      // TODO finish autoSelect
+      // TODO finish this method for every subclass of Message
       T message;
       try {
          switch (messageType.getName()) {

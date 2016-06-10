@@ -30,6 +30,7 @@ public class CompositeMarshallerTest {
    @Mock
    private SnapMarshaller mockSnapMarshaller;
    @Inject
+   @SnapJMS
    private CompositeMarshaller compositeMarshaller;
 
    @Test(expected = NoMarshallerCouldSerializePayloadException.class)

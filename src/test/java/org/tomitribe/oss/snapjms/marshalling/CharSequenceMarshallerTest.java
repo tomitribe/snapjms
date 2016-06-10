@@ -44,7 +44,7 @@ public class CharSequenceMarshallerTest {
 
    @Test
    public void testIsInterestedIn_true() {
-      assertTrue(charSequenceMarshaller.isInterestedIn(String.class));
+      assertTrue(charSequenceMarshaller.isInterestedIn(CharSequence.class));
    }
 
    @Test
