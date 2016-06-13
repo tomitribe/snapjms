@@ -38,7 +38,7 @@ public class JMSContextTest {
    @Mock
    private TransactionSynchronizationRegistry transactionSynchronizationRegistry;
    @Inject
-   private JMSContext jmsContext;
+   private TransactedSessionHolder jmsContext;
 
    @Before
    public void before() throws Exception {

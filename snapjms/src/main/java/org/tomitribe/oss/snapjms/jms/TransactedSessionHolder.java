@@ -18,7 +18,7 @@ import org.tomitribe.oss.snapjms.api.SnapJMSTransacted;
  * Open a single JMS Session for the current transaction
  */
 @ApplicationScoped
-public class JMSContext implements Serializable {
+public class TransactedSessionHolder implements Serializable {
    private static final long serialVersionUID = 1L;
    private final String key;
    @Inject
@@ -29,7 +29,7 @@ public class JMSContext implements Serializable {
    @Resource(lookup = "java:comp/TransactionSynchronizationRegistry")
    private TransactionSynchronizationRegistry transactionSynchronizationRegistry;
 
-   public JMSContext() {
+   public TransactedSessionHolder() {
       key = getClass().getName() + ".session";
    }
 
