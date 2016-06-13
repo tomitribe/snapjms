@@ -14,16 +14,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.tomitribe.oss.snapjms.CDIExtension;
 import org.tomitribe.oss.snapjms.api.SnapJMS;
+import org.tomitribe.oss.snapjms.api.jaxbconfig.SnapJMSJAXBXMLMarshallerConfig;
 
 @RunWith(CdiRunner.class)
-@AdditionalClasses(CDIExtension.class)
+@AdditionalClasses({ CDIExtension.class, SnapJMSJAXBXMLMarshallerConfig.class })
 public class JAXBXMLMarshallerTest {
    @Inject
    @SnapJMS
    private JAXBXMLMarshaller jaxbXMLMarshaller;
 
    @Test
-   public void testMarshall_skip() {
+   public void testMarshall() {
       String output = jaxbXMLMarshaller.marshall(new HasAnXMLRootElement());
       output = output.replaceAll("\\r", "");
       output = output.replaceAll("\\n", "");
