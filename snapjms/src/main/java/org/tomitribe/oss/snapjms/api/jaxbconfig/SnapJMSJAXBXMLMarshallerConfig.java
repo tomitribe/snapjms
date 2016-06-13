@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
 import javax.xml.bind.Marshaller;
 
@@ -25,6 +26,7 @@ public class SnapJMSJAXBXMLMarshallerConfig {
    }
 
    @Produces
+   @Default
    @SnapJMS
    @JAXBMarshallerProperties
    public Map<String, Object> getDefaultJAXBMarshallerProperties() {
@@ -32,6 +34,7 @@ public class SnapJMSJAXBXMLMarshallerConfig {
    }
 
    @Produces
+   @Default
    @SnapJMS
    @JAXBContextProperties
    public Map<String, Object> getDefaultJAXBContextProperties() {

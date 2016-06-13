@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import org.apache.deltaspike.core.util.metadata.AnnotationInstanceProvider;
 import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
 
-public class CDIExtension implements Extension {
+public class AtResourceInjectionCDIExtension implements Extension {
    <T> void processAnnotatedType(@Observes ProcessAnnotatedType<T> pat) {
       Set<AnnotatedField<? super T>> fields = pat.getAnnotatedType().getFields();
       for (AnnotatedField<? super T> field : fields) {

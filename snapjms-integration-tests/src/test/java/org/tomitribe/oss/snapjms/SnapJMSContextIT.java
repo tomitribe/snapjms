@@ -3,6 +3,8 @@ package org.tomitribe.oss.snapjms;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.util.UUID;
+
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.jms.Connection;
@@ -26,7 +28,6 @@ import org.tomitribe.oss.snapjms.api.SnapJMSNonTransacted;
 @RunWith(EJBContainerRunner.class)
 public class SnapJMSContextIT {
    private static final String TEST_DESTINATION = "org.tomitribe.oss.snapjms.SnapJMSContextIT";
-   private static final String TEST_PAYLOAD = "test_payload";
    @Resource(name = "jms/connectionFactory")
    private ConnectionFactory connectionFactory;
    @Resource
@@ -49,32 +50,37 @@ public class SnapJMSContextIT {
       connection.close();
    }
 
+   /**
+    * A test that doesn't use any of the SnapJMS API, just to make sure the standard messaging system actually works.
+    */
    @Test
    public void test_checkIntegrationContainerSanity() throws Exception {
+      String testPayload = UUID.randomUUID().toString();
       try {
          utx.begin();
          Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
          Destination destination = session.createQueue(TEST_DESTINATION);
          MessageProducer producer = session.createProducer(destination);
-         TextMessage message = (TextMessage) session.createTextMessage(TEST_PAYLOAD);
+         TextMessage message = (TextMessage) session.createTextMessage(testPayload);
          producer.send(message);
       } finally {
          utx.commit();
       }
       TextMessage rxMessage = receiveMessage();
       if (rxMessage == null) {
-         fail("No message Recieved. That means there's a problem with the Junit/Application Composer setup of this project."
+         fail("No message Recieved. That means there's a problem with the Junit/EJBContainerRunner configuration."
                + "This needs to be fixed first before fixing any other tests.");
       } else {
-         assertEquals(TEST_PAYLOAD, rxMessage.getText());
+         assertEquals(testPayload, rxMessage.getText());
       }
    }
 
    @Test
    public void testSnapJMSContext_send() throws Exception {
+      String testPayload = UUID.randomUUID().toString();
       try {
          utx.begin();
-         snapJMSContext.send(TEST_PAYLOAD, TEST_DESTINATION);
+         snapJMSContext.send(testPayload, TEST_DESTINATION);
       } finally {
          utx.commit();
       }
@@ -82,34 +88,33 @@ public class SnapJMSContextIT {
       if (rxMessage == null) {
          fail("No message Recieved");
       } else {
-         assertEquals(TEST_PAYLOAD, rxMessage.getText());
+         assertEquals(testPayload, rxMessage.getText());
       }
    }
 
    @Test
    public void testSnapJMSContext_sendImmediately() throws Exception {
       assertEquals(Status.STATUS_NO_TRANSACTION, utx.getStatus());
-      snapJMSContext_noTx.send(TEST_PAYLOAD, TEST_DESTINATION);
+      String testPayload = UUID.randomUUID().toString();
+      snapJMSContext_noTx.send(testPayload, TEST_DESTINATION);
       assertEquals(Status.STATUS_NO_TRANSACTION, utx.getStatus());
       TextMessage rxMessage = receiveMessage();
       if (rxMessage == null) {
          fail("No message Recieved");
       } else {
-         assertEquals(TEST_PAYLOAD, rxMessage.getText());
+         assertEquals(testPayload, rxMessage.getText());
       }
    }
 
    private TextMessage receiveMessage() throws Exception {
-      TextMessage rxMessage;
       try {
          utx.begin();
          Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
          Destination destination = session.createQueue(TEST_DESTINATION);
          MessageConsumer consumer = session.createConsumer(destination);
-         rxMessage = (TextMessage) consumer.receive(10L);
+         return (TextMessage) consumer.receive(10L);
       } finally {
          utx.commit();
       }
-      return rxMessage;
    }
 }

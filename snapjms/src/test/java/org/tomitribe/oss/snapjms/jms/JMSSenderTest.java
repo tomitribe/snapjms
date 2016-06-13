@@ -16,13 +16,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.slf4j.Logger;
-import org.tomitribe.oss.snapjms.CDIExtension;
+import org.tomitribe.oss.snapjms.AtResourceInjectionCDIExtension;
 import org.tomitribe.oss.snapjms.api.SnapJMS;
 import org.tomitribe.oss.snapjms.jms.factories.JMSDestinationFactory;
 import org.tomitribe.oss.snapjms.jms.factories.JMSMessageFactory;
 
 @RunWith(CdiRunner.class)
-@AdditionalClasses(CDIExtension.class)
+@AdditionalClasses(AtResourceInjectionCDIExtension.class)
 public class JMSSenderTest {
    @Produces
    @SnapJMS
