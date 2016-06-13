@@ -1,23 +1,17 @@
 package org.tomitribe.oss.snapjms.marshalling;
 
 import java.io.ByteArrayOutputStream;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Default;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import javax.inject.Qualifier;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.tomitribe.oss.snapjms.api.JAXBXMLMarshallerConfig.JAXBContextProperties;
+import org.tomitribe.oss.snapjms.api.JAXBXMLMarshallerConfig.JAXBMarshallerProperties;
 import org.tomitribe.oss.snapjms.api.SnapJMS;
 import org.tomitribe.oss.snapjms.api.SnapJMSMarshaller;
 
@@ -52,35 +46,5 @@ public class JAXBXMLMarshaller implements SnapJMSMarshaller {
    @Override
    public boolean isInterestedIn(Class<?> payloadClass) {
       return payloadClass.isAnnotationPresent(XmlRootElement.class);
-   }
-
-   public JAXBXMLMarshaller() {
-      defaultJAXBMarshallerProperties = new HashMap<>();
-      defaultJAXBMarshallerProperties.put(Marshaller.JAXB_ENCODING, "UTF-8");
-      defaultJAXBMarshallerProperties.put(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-      defaultJAXBContextProperties = new HashMap<>();
-   }
-
-   @Produces
-   @Default
-   @SnapJMS
-   @JAXBMarshallerProperties
-   private Map<String, Object> defaultJAXBMarshallerProperties;
-   @Produces
-   @Default
-   @SnapJMS
-   @JAXBContextProperties
-   private Map<String, Object> defaultJAXBContextProperties;
-
-   @Qualifier
-   @Retention(RetentionPolicy.RUNTIME)
-   @Target({ ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER })
-   public @interface JAXBMarshallerProperties {
-   }
-
-   @Qualifier
-   @Retention(RetentionPolicy.RUNTIME)
-   @Target({ ElementType.FIELD, ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER })
-   public @interface JAXBContextProperties {
    }
 }

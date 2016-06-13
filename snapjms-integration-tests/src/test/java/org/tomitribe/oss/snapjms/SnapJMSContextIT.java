@@ -31,7 +31,7 @@ public class SnapJMSContextIT {
    private SnapJMSContext snapJMSContext;
 
    @Test
-   public void checkContainer() throws Exception {
+   public void test_checkContainer() throws Exception {
       Connection connection = connectionFactory.createConnection();
       connection.start();
       try {
@@ -56,7 +56,8 @@ public class SnapJMSContextIT {
             utx.commit();
          }
          if (rxMessage == null) {
-            fail("No message Recieved");
+            fail("No message Recieved. That means there's a problem with the Junit/Application Composer setup of this project."
+                  + "This needs to be fixed first before fixing any other tests.");
          } else {
             assertEquals(TEST_PAYLOAD, rxMessage.getText());
          }
