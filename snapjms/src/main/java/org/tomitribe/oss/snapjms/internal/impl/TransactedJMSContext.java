@@ -7,11 +7,10 @@ import javax.inject.Provider;
 import javax.jms.Queue;
 import javax.jms.Session;
 
-import org.tomitribe.oss.snapjms.api.SnapJMS;
 import org.tomitribe.oss.snapjms.api.SnapJMSContext;
+import org.tomitribe.oss.snapjms.api.SnapJMSMarshaller;
 import org.tomitribe.oss.snapjms.api.SnapJMSTransacted;
 import org.tomitribe.oss.snapjms.jms.JMSSender;
-import org.tomitribe.oss.snapjms.marshalling.CompositeMarshaller;
 
 @Default
 @SnapJMSTransacted
@@ -22,11 +21,9 @@ public class TransactedJMSContext implements SnapJMSContext {
    @SnapJMSTransacted
    private Provider<Session> session;
    @Inject
-   @SnapJMS
    private JMSSender sender;
    @Inject
-   @SnapJMS
-   private CompositeMarshaller compositeMarshaller;
+   private SnapJMSMarshaller snapJMSMarshaller;
 
    @Override
    public void send(Object payload) {
@@ -35,7 +32,7 @@ public class TransactedJMSContext implements SnapJMSContext {
 
    @Override
    public void send(Object payload, String destination) {
-      payload = compositeMarshaller.marshall(payload);
+      payload = snapJMSMarshaller.marshall(payload);
       sender.sendMessage(Queue.class, destination, payload, session.get());
    }
 }

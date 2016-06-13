@@ -9,9 +9,6 @@ import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.Topic;
 
-import org.tomitribe.oss.snapjms.api.SnapJMS;
-
-@SnapJMS
 @ApplicationScoped
 public class JMSDestinationFactory implements Serializable {
    private static final long serialVersionUID = 1L;

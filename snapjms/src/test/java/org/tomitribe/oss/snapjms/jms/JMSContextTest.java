@@ -29,18 +29,15 @@ public class JMSContextTest {
    @Mock
    private Logger log;
    @Produces
-   @SnapJMS
    @Mock
    private JMSConnection jmsConnection;
    @Produces
-   @SnapJMS
    @Mock
    private Session session;
    @Produces
    @Mock
    private TransactionSynchronizationRegistry transactionSynchronizationRegistry;
    @Inject
-   @SnapJMS
    private JMSContext jmsContext;
 
    @Before

@@ -29,7 +29,6 @@ public class JMSSenderTest {
    @Mock
    private Logger log;
    @Produces
-   @SnapJMS
    @Mock
    private Session session;
    @Produces
@@ -42,15 +41,12 @@ public class JMSSenderTest {
    @Mock
    private Message message;
    @Produces
-   @SnapJMS
    @Mock
    private JMSDestinationFactory jmsDestinationFactory;
    @Produces
-   @SnapJMS
    @Mock
    private JMSMessageFactory jmsMessageFactory;
    @Inject
-   @SnapJMS
    private JMSSender jmsSender;
 
    @Test

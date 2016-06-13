@@ -30,7 +30,6 @@ public class JMSMessageFactoryTest {
    @Mock
    private TextMessage textMessage;
    @Inject
-   @SnapJMS
    private JMSMessageFactory jmsMessageFactory;
 
    @Before

@@ -11,13 +11,11 @@ import org.jglue.cdiunit.CdiRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.tomitribe.oss.snapjms.AtResourceInjectionCDIExtension;
-import org.tomitribe.oss.snapjms.api.SnapJMS;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses(AtResourceInjectionCDIExtension.class)
 public class CharSequenceMarshallerTest {
    @Inject
-   @SnapJMS
    private CharSequenceMarshaller charSequenceMarshaller;
 
    @Test

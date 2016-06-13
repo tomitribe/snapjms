@@ -15,7 +15,6 @@ import org.tomitribe.oss.snapjms.api.SnapJMS;
 import org.tomitribe.oss.snapjms.jms.factories.JMSDestinationFactory;
 import org.tomitribe.oss.snapjms.jms.factories.JMSMessageFactory;
 
-@SnapJMS
 @ApplicationScoped
 public class JMSSender implements Serializable {
    private static final long serialVersionUID = 1L;
@@ -23,10 +22,8 @@ public class JMSSender implements Serializable {
    @SnapJMS
    private Logger log;
    @Inject
-   @SnapJMS
    private JMSMessageFactory messageFactory;
    @Inject
-   @SnapJMS
    private JMSDestinationFactory jmsDestinationFactory;
 
    public <T extends Destination> void sendMessage(Class<T> destinationType, String destinationName, Object payload, Session session) {

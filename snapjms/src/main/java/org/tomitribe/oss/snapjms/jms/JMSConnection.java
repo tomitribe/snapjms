@@ -20,7 +20,6 @@ import org.tomitribe.oss.snapjms.api.SnapJMSNonTransacted;
 /**
  * Open a single JMS connection for the whole application
  */
-@SnapJMS
 @ApplicationScoped
 public class JMSConnection implements Serializable {
    private static final long serialVersionUID = 1L;

@@ -35,7 +35,6 @@ public class JMSConnectionTest {
    @Mock
    private Connection connection;
    @Inject
-   @SnapJMS
    private JMSConnection jmsConnection;
 
    @Test

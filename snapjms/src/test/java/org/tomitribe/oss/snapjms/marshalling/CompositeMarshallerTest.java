@@ -26,11 +26,9 @@ public class CompositeMarshallerTest {
    @Mock
    private Logger log;
    @Produces
-   @SnapJMS
    @Mock
    private SnapJMSMarshaller mockSnapMarshaller;
    @Inject
-   @SnapJMS
    private CompositeMarshaller compositeMarshaller;
 
    @Test(expected = NoMarshallerCouldSerializePayloadException.class)

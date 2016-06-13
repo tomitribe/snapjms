@@ -17,7 +17,6 @@ import org.tomitribe.oss.snapjms.api.SnapJMSTransacted;
 /**
  * Open a single JMS Session for the current transaction
  */
-@SnapJMS
 @ApplicationScoped
 public class JMSContext implements Serializable {
    private static final long serialVersionUID = 1L;
@@ -26,7 +25,6 @@ public class JMSContext implements Serializable {
    @SnapJMS
    private Logger log;
    @Inject
-   @SnapJMS
    private JMSConnection jmsConnection;
    @Resource(lookup = "java:comp/TransactionSynchronizationRegistry")
    private TransactionSynchronizationRegistry transactionSynchronizationRegistry;

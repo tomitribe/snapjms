@@ -10,21 +10,17 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.tomitribe.oss.snapjms.api.SnapJMS;
 import org.tomitribe.oss.snapjms.api.SnapJMSMarshaller;
 import org.tomitribe.oss.snapjms.api.jaxbconfig.JAXBContextProperties;
 import org.tomitribe.oss.snapjms.api.jaxbconfig.JAXBMarshallerProperties;
 
-@SnapJMS
 @ApplicationScoped
 public class JAXBXMLMarshaller implements SnapJMSMarshaller {
    private static final long serialVersionUID = 1L;
    @Inject
-   @SnapJMS
    @JAXBContextProperties
    private Map<String, Object> jaxbContextProperties;
    @Inject
-   @SnapJMS
    @JAXBMarshallerProperties
    private Map<String, Object> jaxbMarshallerProperties;
 
