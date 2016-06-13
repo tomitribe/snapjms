@@ -3,6 +3,7 @@ package org.tomitribe.oss.snapjms;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.io.StringReader;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -16,6 +17,11 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.transaction.Status;
 import javax.transaction.UserTransaction;
+import javax.xml.bind.JAXB;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.openejb.junit.jee.EJBContainerRunner;
 import org.junit.After;
@@ -106,6 +112,23 @@ public class SnapJMSContextIT {
       }
    }
 
+   @Test
+   public void testSnapJMSContext_sendAsXML() throws Exception {
+      TestPayloadObject testPayload = new TestPayloadObject();
+      try {
+         utx.begin();
+         snapJMSContext.send(testPayload, TEST_DESTINATION);
+      } finally {
+         utx.commit();
+      }
+      TextMessage rxMessage = receiveMessage();
+      if (rxMessage == null) {
+         fail("No message Recieved");
+      } else {
+         assertEquals(testPayload, JAXB.unmarshal(new StringReader(rxMessage.getText()), TestPayloadObject.class));
+      }
+   }
+
    private TextMessage receiveMessage() throws Exception {
       try {
          utx.begin();
@@ -115,6 +138,42 @@ public class SnapJMSContextIT {
          return (TextMessage) consumer.receive(10L);
       } finally {
          utx.commit();
+      }
+   }
+
+   @XmlRootElement
+   @XmlAccessorType(XmlAccessType.NONE)
+   public static class TestPayloadObject {
+      @XmlElement
+      public String uuid;
+
+      public TestPayloadObject() {
+         uuid = UUID.randomUUID().toString();
+      }
+
+      @Override
+      public int hashCode() {
+         final int prime = 31;
+         int result = 1;
+         result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
+         return result;
+      }
+
+      @Override
+      public boolean equals(Object obj) {
+         if (this == obj)
+            return true;
+         if (obj == null)
+            return false;
+         if (getClass() != obj.getClass())
+            return false;
+         TestPayloadObject other = (TestPayloadObject) obj;
+         if (uuid == null) {
+            if (other.uuid != null)
+               return false;
+         } else if (!uuid.equals(other.uuid))
+            return false;
+         return true;
       }
    }
 }

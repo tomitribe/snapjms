@@ -14,8 +14,8 @@ import javax.jms.JMSException;
 import javax.jms.Session;
 
 import org.slf4j.Logger;
+import org.tomitribe.oss.snapjms.api.SnapJMS;
 import org.tomitribe.oss.snapjms.api.SnapJMSNonTransacted;
-import org.tomitribe.oss.snapjms.internal.slf4j.SnapJMS;
 
 /**
  * Open a single JMS connection for the whole application

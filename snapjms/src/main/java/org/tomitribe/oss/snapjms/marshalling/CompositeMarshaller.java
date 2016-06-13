@@ -6,8 +6,8 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.tomitribe.oss.snapjms.api.SnapJMS;
 import org.tomitribe.oss.snapjms.api.SnapJMSMarshaller;
-import org.tomitribe.oss.snapjms.internal.slf4j.SnapJMS;
 
 @Default
 @SnapJMS

@@ -2,8 +2,8 @@ package org.tomitribe.oss.snapjms.marshalling;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import org.tomitribe.oss.snapjms.api.SnapJMS;
 import org.tomitribe.oss.snapjms.api.SnapJMSMarshaller;
-import org.tomitribe.oss.snapjms.internal.slf4j.SnapJMS;
 
 @SnapJMS
 @ApplicationScoped

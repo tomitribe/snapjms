@@ -11,8 +11,8 @@ import javax.jms.Session;
 import javax.transaction.TransactionSynchronizationRegistry;
 
 import org.slf4j.Logger;
+import org.tomitribe.oss.snapjms.api.SnapJMS;
 import org.tomitribe.oss.snapjms.api.SnapJMSTransacted;
-import org.tomitribe.oss.snapjms.internal.slf4j.SnapJMS;
 
 /**
  * Open a single JMS Session for the current transaction

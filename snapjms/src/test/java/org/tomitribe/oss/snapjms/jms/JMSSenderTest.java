@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.slf4j.Logger;
 import org.tomitribe.oss.snapjms.AtResourceInjectionCDIExtension;
-import org.tomitribe.oss.snapjms.internal.slf4j.SnapJMS;
+import org.tomitribe.oss.snapjms.api.SnapJMS;
 import org.tomitribe.oss.snapjms.jms.factories.JMSDestinationFactory;
 import org.tomitribe.oss.snapjms.jms.factories.JMSMessageFactory;
 
