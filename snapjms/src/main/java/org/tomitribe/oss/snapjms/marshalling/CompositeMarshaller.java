@@ -1,7 +1,6 @@
 package org.tomitribe.oss.snapjms.marshalling;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
@@ -11,6 +10,7 @@ import org.tomitribe.oss.snapjms.api.SnapJMSMarshaller;
 import org.tomitribe.oss.snapjms.internal.slf4j.SnapJMS;
 
 @Default
+@SnapJMS
 @ApplicationScoped
 public class CompositeMarshaller implements SnapJMSMarshaller {
    private static final long serialVersionUID = 1L;
@@ -18,7 +18,7 @@ public class CompositeMarshaller implements SnapJMSMarshaller {
    @SnapJMS
    private Logger log;
    @Inject
-   @Any
+   @SnapJMS
    private Instance<SnapJMSMarshaller> marshallers;
 
    @Override

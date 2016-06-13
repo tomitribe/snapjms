@@ -13,7 +13,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.tomitribe.oss.snapjms.api.SnapJMSMarshaller;
 import org.tomitribe.oss.snapjms.api.jaxbconfig.JAXBContextProperties;
 import org.tomitribe.oss.snapjms.api.jaxbconfig.JAXBMarshallerProperties;
+import org.tomitribe.oss.snapjms.internal.slf4j.SnapJMS;
 
+@SnapJMS
 @ApplicationScoped
 public class JAXBXMLMarshaller implements SnapJMSMarshaller {
    private static final long serialVersionUID = 1L;
