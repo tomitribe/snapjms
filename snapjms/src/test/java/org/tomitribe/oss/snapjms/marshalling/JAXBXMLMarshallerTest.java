@@ -13,12 +13,14 @@ import org.jglue.cdiunit.CdiRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.tomitribe.oss.snapjms.AtResourceInjectionCDIExtension;
+import org.tomitribe.oss.snapjms.api.SnapJMS;
 import org.tomitribe.oss.snapjms.api.jaxbconfig.SnapJMSJAXBXMLMarshallerConfig;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses({ AtResourceInjectionCDIExtension.class, SnapJMSJAXBXMLMarshallerConfig.class })
 public class JAXBXMLMarshallerTest {
    @Inject
+   @SnapJMS
    private JAXBXMLMarshaller jaxbXMLMarshaller;
 
    @Test
