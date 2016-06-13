@@ -1,4 +1,4 @@
-package org.tomitribe.oss.snapjms.api;
+package org.tomitribe.oss.snapjms.internal.slf4j;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -17,13 +17,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.tomitribe.oss.snapjms.AtResourceInjectionCDIExtension;
-import org.tomitribe.oss.snapjms.api.SnapJMS;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses(AtResourceInjectionCDIExtension.class)
 public class JMSMessageFactoryTest {
    @Produces
-   @SnapJMS
    @Mock
    private Session session;
    @Produces

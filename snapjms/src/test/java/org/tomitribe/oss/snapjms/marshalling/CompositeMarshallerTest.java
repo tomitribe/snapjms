@@ -15,8 +15,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.slf4j.Logger;
 import org.tomitribe.oss.snapjms.AtResourceInjectionCDIExtension;
-import org.tomitribe.oss.snapjms.api.SnapJMS;
 import org.tomitribe.oss.snapjms.api.SnapJMSMarshaller;
+import org.tomitribe.oss.snapjms.internal.slf4j.SnapJMS;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses(AtResourceInjectionCDIExtension.class)
