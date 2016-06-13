@@ -3,6 +3,7 @@ package org.tomitribe.oss.snapjms.internal.impl;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.jms.Queue;
 import javax.jms.Session;
 
@@ -19,7 +20,7 @@ public class TransactedJMSContext implements SnapJMSContext {
    private static final long serialVersionUID = 1L;
    @Inject
    @SnapJMSTransacted
-   private Session session;
+   private Provider<Session> session;
    @Inject
    @SnapJMS
    private JMSSender sender;
@@ -35,6 +36,6 @@ public class TransactedJMSContext implements SnapJMSContext {
    @Override
    public void send(Object payload, String destination) {
       payload = compositeMarshaller.marshall(payload);
-      sender.sendMessage(Queue.class, destination, payload, session);
+      sender.sendMessage(Queue.class, destination, payload, session.get());
    }
 }

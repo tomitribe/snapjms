@@ -1,5 +1,7 @@
 package org.tomitribe.oss.snapjms.jms.factories;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -9,7 +11,9 @@ import org.tomitribe.oss.snapjms.api.SnapJMS;
 
 @SnapJMS
 @ApplicationScoped
-public class JMSMessageFactory {
+public class JMSMessageFactory implements Serializable {
+   private static final long serialVersionUID = 1L;
+
    /**
     * Create a message, autoselect the proper type, and set the payload.
     */

@@ -29,7 +29,7 @@ public class JMSConnection implements Serializable {
    private Logger log;
    @Resource(name = "jms/connectionFactory")
    private ConnectionFactory connectionFactory;
-   private Connection connection;
+   private transient Connection connection;
 
    @PostConstruct
    void postConstruct() {

@@ -13,6 +13,7 @@ import org.tomitribe.oss.snapjms.api.SnapJMSMarshaller;
 @SnapJMS
 @ApplicationScoped
 public class CompositeMarshaller implements SnapJMSMarshaller {
+   private static final long serialVersionUID = 1L;
    @Inject
    @SnapJMS
    private Instance<SnapJMSMarshaller> marshallers;
