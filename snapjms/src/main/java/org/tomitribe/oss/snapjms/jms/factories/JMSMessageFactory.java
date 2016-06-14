@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 
 @ApplicationScoped
 public class JMSMessageFactory implements Serializable {
@@ -36,11 +37,9 @@ public class JMSMessageFactory implements Serializable {
       // TODO finish this method for every subclass of Message
       T message;
       try {
-         switch (messageType.getName()) {
-         case "javax.jms.TextMessage":
+         if (messageType.isAssignableFrom(TextMessage.class)) {
             message = messageType.cast(session.createTextMessage(payload.toString()));
-            break;
-         default:
+         } else {
             throw new UnknownMessageTypeException();
          }
          return message;
