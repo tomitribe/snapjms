@@ -20,7 +20,8 @@ public class AtResourceInjectionCDIExtension implements Extension {
          if (shouldInjectionAnnotationBeAddedToField(field)) {
             AnnotatedType<T> at = pat.getAnnotatedType();
             AnnotatedTypeBuilder<T> builder = new AnnotatedTypeBuilder<T>().readFromType(at);
-            addInjectAnnotationToFields(at, builder);
+            Inject injectAnnotation = AnnotationInstanceProvider.of(Inject.class);
+            builder.addToField(field, injectAnnotation);
             pat.setAnnotatedType(builder.create());
          }
       }
@@ -28,14 +29,5 @@ public class AtResourceInjectionCDIExtension implements Extension {
 
    private <X> boolean shouldInjectionAnnotationBeAddedToField(AnnotatedField<? super X> field) {
       return !field.isAnnotationPresent(Inject.class) && field.isAnnotationPresent(Resource.class);
-   }
-
-   private <X> void addInjectAnnotationToFields(final AnnotatedType<X> annotatedType, AnnotatedTypeBuilder<X> builder) {
-      Inject injectAnnotation = AnnotationInstanceProvider.of(Inject.class);
-      for (AnnotatedField<? super X> field : annotatedType.getFields()) {
-         if (shouldInjectionAnnotationBeAddedToField(field)) {
-            builder.addToField(field, injectAnnotation);
-         }
-      }
    }
 }
