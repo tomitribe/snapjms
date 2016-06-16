@@ -23,7 +23,7 @@ import org.tomitribe.oss.snapjms.api.SnapJMS;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses(AtResourceInjectionCDIExtension.class)
-public class JMSContextTest {
+public class TransactedSessionHolderTest {
    @Produces
    @SnapJMS
    @Mock
@@ -38,7 +38,7 @@ public class JMSContextTest {
    @Mock
    private TransactionSynchronizationRegistry transactionSynchronizationRegistry;
    @Inject
-   private TransactedSessionHolder jmsContext;
+   private TransactedSessionHolder transactedSessionHolder;
 
    @Before
    public void before() throws Exception {
@@ -47,18 +47,18 @@ public class JMSContextTest {
 
    @Test
    public void testGetSession() throws Exception {
-      assertEquals(session, jmsContext.getSession());
+      assertEquals(session, transactedSessionHolder.getSession());
       verify(jmsConnection).createJMSSession();
-      verify(transactionSynchronizationRegistry).getResource(jmsContext.getKey());
-      verify(transactionSynchronizationRegistry).putResource(jmsContext.getKey(), session);
+      verify(transactionSynchronizationRegistry).getResource(transactedSessionHolder.getKey());
+      verify(transactionSynchronizationRegistry).putResource(transactedSessionHolder.getKey(), session);
       verifyNoMoreInteractions(transactionSynchronizationRegistry);
    }
 
    @Test
    public void testGetSession_alreadyExists() throws Exception {
-      when(transactionSynchronizationRegistry.getResource(jmsContext.getKey())).thenReturn(session);
-      assertEquals(session, jmsContext.getSession());
-      verify(transactionSynchronizationRegistry).getResource(jmsContext.getKey());
+      when(transactionSynchronizationRegistry.getResource(transactedSessionHolder.getKey())).thenReturn(session);
+      assertEquals(session, transactedSessionHolder.getSession());
+      verify(transactionSynchronizationRegistry).getResource(transactedSessionHolder.getKey());
       verifyNoMoreInteractions(transactionSynchronizationRegistry);
    }
 
@@ -66,6 +66,6 @@ public class JMSContextTest {
    @Test(expected = NoActiveTransactionException.class)
    public void testGetSession_noTransaction() {
       when(transactionSynchronizationRegistry.getResource(any(String.class))).thenThrow(NoActiveTransactionException.class);
-      jmsContext.getSession();
+      transactedSessionHolder.getSession();
    }
 }
