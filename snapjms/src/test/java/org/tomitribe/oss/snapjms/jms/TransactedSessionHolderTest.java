@@ -13,7 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */package org.tomitribe.oss.snapjms.jms;
+ */
+package org.tomitribe.oss.snapjms.jms;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
